@@ -24,3 +24,9 @@ sed -i -r 's#/bin/login#/bin/login -f root#g' feeds/packages/utils/ttyd/files/tt
 
 # design修改proxy链接
 sed -i -r "s#navbar_proxy = 'openclash'#navbar_proxy = 'passwall'#g" feeds/luci/themes/luci-theme-design/luasrc/view/themes/design/header.htm
+
+# 叠加本地自定义软件包（zerotier 等），保持上游 config/zn-m2.config 零差异
+EXTRA_CONFIG="${GITHUB_WORKSPACE:-..}/config/local-packages.config"
+if [ -f "$EXTRA_CONFIG" ]; then
+  cat "$EXTRA_CONFIG" >> .config
+fi
