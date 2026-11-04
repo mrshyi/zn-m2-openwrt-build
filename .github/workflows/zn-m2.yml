@@ -2,7 +2,7 @@
 # https://github.com/P3TERX/Actions-OpenWrt
 #
 # File: .github/workflows/zn-m2.yml
-# Description: Build OpenWrt ZN-M2 firmware (basic + gecoosac-v2) using GitHub Actions
+# Description: Build OpenWrt ZN-M2 firmware (basic) using GitHub Actions
 #
 # Copyright (c) 2019-2024 P3TERX <https://p3terx.com>
 #
@@ -13,8 +13,9 @@
 name: zn-m2 build
 
 on:
-  schedule:
-    - cron: '23 19 * * *'   # Daily at 03:23 CST
+  # 定时构建已停用（原 cron '23 19 * * *'，CST 03:23），仅保留手动触发。
+  # 上游 check job 以 event_name == 'schedule' 为条件，删掉 schedule 后它自然跳过；
+  # build 的 if 含 always()，手动触发不受影响，故无需改动其它部分。
   workflow_dispatch:
 
 defaults:
@@ -132,15 +133,10 @@ jobs:
         cp -a . /tmp/firmware-basic/
 
     # ============================================================
-    # Build 2: GECOSAC-V2 (with gecoosac, incremental)
+    # Build 2 已停用：config 中已移除 gecoosac，不再产出 gecoosac-v2 变体。
+    # 如需恢复双变体，取消 config/local-packages.config 里 gecoosac 的删除项，
+    # 并恢复本段步骤与 organize-firmware.sh 的第二个复制循环。
     # ============================================================
-    - name: Build GECOSAC firmware (incremental)
-      run: |
-        cd openwrt
-        cp /tmp/zn-m2-full.config .config
-        make defconfig
-        echo "$(nproc) thread compile (gecoosac-v2, incremental)"
-        make -j$(nproc) || make -j1 V=s
 
     # ============================================================
     # Organize & Publish

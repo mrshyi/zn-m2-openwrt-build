@@ -23,9 +23,8 @@ for f in /tmp/firmware-basic/*; do
   copy_with_suffix "$f" "basic"
 done
 
-for f in *; do
-  [ -f "$f" ] && copy_with_suffix "$f" "gecoosac-v2"
-done
+# gecoosac-v2 变体已停用（config 中移除 gecoosac，workflow 不再执行 Build 2），
+# 此处不再复制第二份。恢复双变体时把原循环加回即可。
 
 echo "Release firmware files:"
 ls -la /tmp/release-firmware/

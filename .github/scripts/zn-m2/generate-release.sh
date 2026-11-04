@@ -23,8 +23,7 @@ grep hysteria    "$MANIFEST" | awk -F" - " '{print $2}' | awk -F"-" '{print "**H
 grep chinadns-ng "$MANIFEST" | awk -F" - " '{print $2}' | awk -F"-" '{print "**ChinaDNS-NG:** `"$1"`"}' >> release.txt || true
 echo "" >> release.txt
 echo "### 变体说明" >> release.txt
-echo "- **basic**: 纯净版，不含集客AC控制器" >> release.txt
-echo "- **gecoosac-v2**: 含集客AC控制器 V2" >> release.txt
+echo "- 仅 **basic** 一种变体，已移除集客 AC 控制器（gecoosac）" >> release.txt
 echo "" >> release.txt
 echo "详细包信息请查看 manifest 文件" >> release.txt
 
